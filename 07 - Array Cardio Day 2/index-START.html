@@ -26,24 +26,58 @@
 
     // Some and Every Checks
     // Array.prototype.some() // is at least one person 19 or older?
-    // const isAdult = people.some((person) => {
-    //   const currentYear = (new Date()).getFullYear();
-    //   (currentYear - person.year) >= 19
-    // });
+    const date = new Date()
+    const currentYear = date.getFullYear()
 
-    const isAdult = people.some((person) => ((new Date()).getFullYear() - person.year) >= 19)
+    const isAdult = people.some((person) => currentYear - person.year >= 19)
+
+    const isAdult2 = people.some(function(person) {
+      if(currentYear - person.year >= 19) {
+        return true
+      }
+    })
+
+    console.log({isAdult}) // {} around the variable gives you variable name and value in the console
+
     // Array.prototype.every() // is everyone 19 or older?
-    const allAdults = people.every((person) => ((new Date()).getFullYear() - person.year) >= 19)
+    const isEverybodyAdult = people.every(person => person.year - currentYear >= 19)
+
+    console.log(isEverybodyAdult)
+
     // Array.prototype.find()
-    // Find is like filter, but instead returns just the one you are looking for
+    // Find is like filter, but instead returns just the (first) one you are looking for
     // find the comment with the ID of 823423
     const comment = comments.find((comment) => comment.id === 823423);
+
+    const commentToo = comments.find(function(comment) {
+      if(comment.id === 823423) {
+        return true;
+      }
+    })
+
+    console.log(comment)
 
     // Array.prototype.findIndex()
     // Find the comment with this ID
     // delete the comment with the ID of 823423
-    const index = comments.findIndex((comment) => comment.id === 823423)
+    const index = comments.findIndex((comment) => comment.id === 823423);
+
+    const indexToo = comments.findIndex(function(comment) {
+      if(comment.id === 823423) {
+        return true
+      }
+    })
+
     comments.splice(index, 1);
+
+    const newComments = [
+      ...comments.slice(0, index), // spread items into array, otherwise left with two arrays inside the array
+      ...comments.slice(index + 1)
+    ]
+
+    console.log(index)
+    console.log(indexToo)
+    console.table(comments)
 
   </script>
 </body>
