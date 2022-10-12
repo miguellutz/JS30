@@ -7,6 +7,19 @@
 </head>
 <body>
 <script>
+  const pressed = []
+  const secretCode = 'wesbos';
+
+  window.addEventListener('keyup', (e) => {
+    pressed.push(e.key);
+    pressed.splice(-secretCode.length - 1, pressed.length - secretCode.length);
+
+    console.log(pressed.join(''))
+    if(pressed.join('') === secretCode) {
+      console.log('You won')
+      cornify_add();
+    }
+  })
 </script>
 </body>
 </html>
