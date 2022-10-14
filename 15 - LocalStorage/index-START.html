@@ -23,12 +23,20 @@
       <input type="text" name="item" placeholder="Item Name" required>
       <input type="submit" value="+ Add Item">
     </form>
+    <div class="actionButtons">
+      <button id="toggleCheck">Check All</button>
+      <button id="clearItems">Clear Items</button>
+    </div>
+
   </div>
 
 <script>
   const addItems = document.querySelector('.add-items');
   const itemsList = document.querySelector('.plates');
-  const items = JSON.parse(localStorage.getItem('items')) || [];
+  let items = JSON.parse(localStorage.getItem('items')) || [];
+
+  const toggleCheckButton = document.querySelector('#toggleCheck');
+  const clearItemsButton = document.querySelector('#clearItems')
 
   function addItem(e) {
     e.preventDefault();
@@ -72,6 +80,40 @@
   itemsList.addEventListener('click', toggleDone) // event delegation, listening for click on something higher and inside check if it is thing that we are looking for
 
   addItems.addEventListener('submit', addItem)
+
+  let buttonToggled = false;
+
+  function toggleAllChecked() {
+    items.map((item) => {
+      if(buttonToggled) {
+        item.done = true;
+      } else {
+        item.done = false;
+      }
+    })
+
+    localStorage.setItem('items', JSON.stringify(items));
+    populateList(items, itemsList);
+  }
+
+  function toggleButton() {
+    const allDone = items.every((item) => {
+      return item.done === true;
+    })
+    toggleCheckButton.innerText = allDone ? 'Uncheck All' : 'Check All'
+  }
+
+  toggleCheckButton.addEventListener('click', () => buttonToggled = !buttonToggled)
+  toggleCheckButton.addEventListener('click', toggleAllChecked)
+  toggleCheckButton.addEventListener('click', toggleButton)
+
+  function clearList() {
+    items = [];
+    localStorage.setItem('items', JSON.stringify(items));
+    populateList(items, itemsList);
+  }
+
+  clearItemsButton.addEventListener('click', clearList);
 
   populateList(items, itemsList)
 

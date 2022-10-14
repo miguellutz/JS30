@@ -70,6 +70,17 @@ h2 {
   content: "🌮";
 }
 
+.actionButtons {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.actionButtons button {
+  padding: 10px;
+}
+
 .add-items {
   margin-top: 20px;
 }
